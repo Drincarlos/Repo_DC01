@@ -7,8 +7,8 @@ source_repo_url = 'https://github.com/Drincarlos/Repo_DC01.git'  # Source reposi
 target_repo_url = 'https://github.com/Drincarlos/Repo_DC02.git'  # Target repository URL
 local_source_repo_path = 'C:/Users/aldrin.b.carlos/git/Repo_DC01'         # Local path for source repo
 local_target_repo_path = 'C:/Users/aldrin.b.carlos/git/Repo_DC02'         # Local path for target repo
-file_to_copy = 'Repo_DC01/ContentFile.txt'                         # Path to the file in the source repo
-target_file_path = 'Repo_DC02/ContentFile.txt'               # Path to save the file in the target repo
+file_to_copy = 'ContentFile.txt'                         # Path to the file in the source repo
+target_file_path = 'ContentFile.txt'               # Path to save the file in the target repo
 
 # Clone or pull source repository
 if not os.path.exists(local_source_repo_path):
