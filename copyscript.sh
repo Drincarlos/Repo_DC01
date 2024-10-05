@@ -24,11 +24,6 @@ FILES_TO_SYNC=(
 
 BRANCH="main"  # Branch to sync
  
-
-# rsync -av "$FILE_TO_SYNC" "$DEST_DIR"
- 
-# Create the working directory
-
 mkdir -p "$SOURCE_DIR"
 
 mkdir -p "$DEST_DIR"
@@ -41,7 +36,9 @@ if [ -d "$SOURCE_DIR" ]; then
 else
   git clone --branch "$BRANCH" "$SOURCE_REPO_URL" "$SOURCE_DIR"
 fi 
-  
+
+echo -e "\n[ Task Done ]\n"
+
 # Clone the destination repository
 
 echo -e "\n#################################### Cloning of $DEST_REPO_URL. ####################################\n"
@@ -50,13 +47,21 @@ if [ -d "$DEST_DIR" ]; then
 else
   git clone --branch "$BRANCH" "$DEST_REPO_URL" "$DEST_DIR"
 fi
- 
+
+echo -e "\n[ Task Done ]\n"
+
+#Sync from Remote to Local Repository
+
+echo -e "\n#################################### Syncing Remote to Local Repository... ####################################\n"
+
+git pull origin main
+
+echo -e "\n[ Task Done ]\n"
+
+
 # Copy the file to the destination repository
 
 echo -e "\n#################################### Copying file from source to destination... ####################################\n"
-
-#for FILE in "${FILES_TO_SYNC[@]}"; do
-#cp -R "$SOURCE_DIR/$FILE" "$DEST_DIR/$FILE"
  
 for FILE in "${FILES_TO_SYNC[@]}"; do
     if [ -e "$SOURCE_DIR/$FILE" ]; then
@@ -71,8 +76,11 @@ for FILE in "${FILES_TO_SYNC[@]}"; do
     fi
 done
 
+echo -e "\n[ Task Done ]\n"
 
 # Commit and push changes to the destination repository
+
+echo -e "\n#################################### Push changes into Git... ####################################\n"
 
 cd "$DEST_DIR" || exit
 
@@ -92,28 +100,8 @@ else
 
     git push origin "$BRANCH"
 
-#    git diff last version:HEAD
-
-    echo -e "\nChanges pushed successfully.\n"
+    echo -e "\nChanges pushed successfully...\n"
 
 fi
- 
 
-
-# git diff --name-only -branch "$BRANCH" "$SOURCE_DIR" "$DEST_DIR"
-
-#git diff -u "$SOURCE_DIR/SyncFile01" "$DEST_DIR/SyncFile01"
-
-#echo "Comparing two files"
-#diff_output=$(diff -u "$SOURCE_DIR/SyncFile01" "$DEST_DIR/SyncFile01")
-
-# Check if there are differences
-#if [ -z "$diff_output" ]; then
-#    echo "No differences found between the files."
-#else
-#    echo "Differences between the files:"
-#    echo "$diff_output"
-#fi
-
-
-echo -e "\nDone\n"
+echo -e "\n[ Task Done ]\n"
